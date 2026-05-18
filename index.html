@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Osol Specialty Coffee | أصول للقهوة المختصة</title>
 
-  <!-- Google Fonts: Cairo (Arabic/English) + Cormorant Garamond (Luxury Serif) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- FontAwesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
@@ -72,6 +70,19 @@
     ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
 
     /* ============================================================
+       BILINGUAL SYSTEM UTILITIES
+    ============================================================ */
+    body.lang-en .ar-text { display: none !important; }
+    body.lang-ar .en-text { display: none !important; }
+    
+    body.lang-ar {
+      direction: rtl;
+    }
+    body.lang-en {
+      direction: ltr;
+    }
+
+    /* ============================================================
        UTILITY CLASSES
     ============================================================ */
     .container {
@@ -100,9 +111,18 @@
       color: var(--beige);
     }
 
+    body.lang-ar .section-title {
+      font-family: var(--font-sans);
+      font-weight: 500;
+    }
+
     .section-title em {
       font-style: italic;
       color: var(--gold);
+    }
+
+    body.lang-ar .section-title em {
+      font-style: normal;
     }
 
     .section-subtitle {
@@ -200,6 +220,23 @@
       transform: translateY(-2px);
     }
 
+    .lang-switch-btn {
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(197,168,128,0.3);
+      color: var(--gold);
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lang-switch-btn:hover {
+      background: rgba(197,168,128,0.1);
+      border-color: var(--gold);
+    }
+
     /* ============================================================
        NAVIGATION
     ============================================================ */
@@ -272,7 +309,12 @@
     .nav-links a:hover { color: var(--beige); }
     .nav-links a:hover::after { right: 0; }
 
-    .nav-cta { margin-left: 8px; }
+    .nav-actions-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-cta { margin-inline-start: 8px; }
 
     .hamburger {
       display: none;
@@ -302,7 +344,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 32px;
+      gap: 28px;
       padding: 40px;
     }
     .mobile-menu.open { display: flex; }
@@ -313,6 +355,10 @@
       color: var(--beige);
       letter-spacing: 0.05em;
       transition: color 0.2s;
+    }
+    body.lang-ar .mobile-menu a {
+      font-family: var(--font-sans);
+      font-size: 1.6rem;
     }
     .mobile-menu a:hover { color: var(--gold); }
 
@@ -337,10 +383,9 @@
       z-index: 0;
     }
 
-    /* Decorative coffee ring */
+    /* Decorative coffee ring directional handling */
     .hero-ring {
       position: absolute;
-      right: -80px;
       top: 50%;
       transform: translateY(-50%);
       width: 620px;
@@ -349,6 +394,9 @@
       border: 1px solid rgba(197,168,128,0.12);
       z-index: 1;
     }
+    body.lang-en .hero-ring { right: -80px; left: auto; }
+    body.lang-ar .hero-ring { left: -80px; right: auto; }
+
     .hero-ring::before {
       content: '';
       position: absolute;
@@ -366,17 +414,27 @@
 
     .hero-image-wrap {
       position: absolute;
-      right: 0; top: 0; bottom: 0;
+      top: 0; bottom: 0;
       width: 52%;
       overflow: hidden;
       z-index: 1;
     }
+    body.lang-en .hero-image-wrap { right: 0; left: auto; }
+    body.lang-ar .hero-image-wrap { left: 0; right: auto; }
 
-    .hero-image-wrap::before {
+    body.lang-en .hero-image-wrap::before {
       content: '';
       position: absolute;
       inset: 0;
       background: linear-gradient(90deg, var(--espresso) 0%, transparent 40%),
+                  linear-gradient(0deg, var(--espresso) 0%, transparent 30%);
+      z-index: 2;
+    }
+    body.lang-ar .hero-image-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(-90deg, var(--espresso) 0%, transparent 40%),
                   linear-gradient(0deg, var(--espresso) 0%, transparent 30%);
       z-index: 2;
     }
@@ -417,7 +475,7 @@
       padding: 7px 18px;
       font-size: 0.75rem;
       font-weight: 600;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 28px;
@@ -432,20 +490,17 @@
       color: var(--beige);
       margin-bottom: 20px;
     }
+    body.lang-ar .hero-title {
+      font-family: var(--font-sans);
+      font-weight: 400;
+      line-height: 1.2;
+    }
     .hero-title em {
       font-style: italic;
       color: var(--gold);
-      display: block;
     }
-    .hero-title .hero-ar {
-      font-size: 0.48em;
+    body.lang-ar .hero-title em {
       font-style: normal;
-      font-family: var(--font-sans);
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      display: block;
-      margin-top: 6px;
     }
 
     .hero-sub {
@@ -469,13 +524,16 @@
       padding-top: 36px;
       border-top: 1px solid rgba(197,168,128,0.12);
     }
-    .stat-item {}
     .stat-num {
       font-family: var(--font-serif);
       font-size: 2.2rem;
       font-weight: 400;
       color: var(--gold);
       line-height: 1;
+    }
+    body.lang-ar .stat-num {
+      font-family: var(--font-sans);
+      font-weight: 600;
     }
     .stat-label {
       font-size: 0.75rem;
@@ -598,12 +656,19 @@
       letter-spacing: 0.15em;
       margin-bottom: 10px;
     }
+    body.lang-ar .step-num {
+      font-family: var(--font-sans);
+    }
     .step-title {
       font-family: var(--font-serif);
       font-size: 1.5rem;
       font-weight: 500;
       color: var(--beige);
       margin-bottom: 12px;
+    }
+    body.lang-ar .step-title {
+      font-family: var(--font-sans);
+      font-weight: 600;
     }
     .step-desc {
       font-size: 0.9rem;
@@ -702,15 +767,15 @@
     }
     .bag-label-ar {
       font-family: var(--font-sans);
-      font-size: 0.5rem;
-      color: rgba(255,255,255,0.5);
+      font-size: 0.55rem;
+      color: rgba(255,255,255,0.7);
       margin-top: 2px;
     }
     .bag-icon { font-size: 1.8rem; margin-top: 24px; }
 
     .product-badge {
       position: absolute;
-      top: 16px; right: 16px;
+      top: 16px;
       background: var(--gold);
       color: var(--espresso);
       font-size: 0.68rem;
@@ -719,6 +784,7 @@
       text-transform: uppercase;
       padding: 4px 12px;
       border-radius: var(--radius-pill);
+      inset-inline-end: 16px;
     }
 
     .product-card-body { padding: 24px; }
@@ -726,7 +792,7 @@
     .product-origin {
       font-size: 0.72rem;
       font-weight: 600;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 6px;
@@ -737,6 +803,11 @@
       font-weight: 500;
       color: var(--beige);
       margin-bottom: 8px;
+    }
+    body.lang-ar .product-name {
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 1.2rem;
     }
     .product-notes {
       font-size: 0.82rem;
@@ -756,6 +827,11 @@
       font-size: 1.5rem;
       font-weight: 400;
       color: var(--beige);
+    }
+    body.lang-ar .product-price {
+      font-family: var(--font-sans);
+      font-weight: 500;
+      font-size: 1.3rem;
     }
     .product-price span {
       font-family: var(--font-sans);
@@ -781,6 +857,7 @@
     }
     .add-to-cart.added {
       background: #4caf50;
+      color: var(--white);
       animation: cartPop 0.4s ease;
     }
     @keyframes cartPop {
@@ -789,10 +866,10 @@
       100% { transform: scale(1) rotate(10deg); }
     }
 
-    /* Cart counter */
+    /* Cart counter layout neutral */
     #cart-counter {
       position: fixed;
-      top: 20px; right: 80px;
+      top: 20px;
       z-index: 1001;
       background: var(--gold);
       color: var(--espresso);
@@ -803,6 +880,7 @@
       display: none;
       align-items: center; justify-content: center;
       animation: popIn 0.3s ease;
+      inset-inline-end: 80px;
     }
     #cart-counter.show { display: flex; }
     @keyframes popIn {
@@ -909,6 +987,11 @@
       color: var(--beige);
       margin-bottom: 3px;
     }
+    body.lang-ar .menu-item-name {
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 1rem;
+    }
     .menu-item-desc {
       font-size: 0.78rem;
       color: var(--text-muted);
@@ -930,14 +1013,19 @@
       color: var(--gold);
       flex-shrink: 0;
     }
+    body.lang-ar .menu-item-price {
+      font-family: var(--font-sans);
+      font-weight: 500;
+    }
     .menu-item-price small {
       font-family: var(--font-sans);
       font-size: 0.7rem;
       color: var(--text-muted);
       display: block;
-      text-align: right;
       font-weight: 400;
     }
+    body.lang-en .menu-item-price small { text-align: right; }
+    body.lang-ar .menu-item-price small { text-align: left; }
 
     /* ============================================================
        FOOTER
@@ -993,13 +1081,19 @@
       position: relative;
       padding-bottom: 12px;
     }
+    body.lang-ar .footer-col h4 {
+      font-family: var(--font-sans);
+      font-weight: 600;
+    }
     .footer-col h4::after {
       content: '';
       position: absolute;
-      bottom: 0; left: 0;
+      bottom: 0;
       width: 30px; height: 1px;
       background: var(--gold);
     }
+    body.lang-en .footer-col h4::after { left: 0; right: auto; }
+    body.lang-ar .footer-col h4::after { right: 0; left: auto; }
 
     .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
     .footer-col ul li a {
@@ -1008,7 +1102,9 @@
       transition: var(--transition-fast);
       display: flex; align-items: center; gap: 8px;
     }
-    .footer-col ul li a:hover { color: var(--gold); padding-left: 4px; }
+    body.lang-en .footer-col ul li a:hover { padding-left: 4px; padding-right: 0; }
+    body.lang-ar .footer-col ul li a:hover { padding-right: 4px; padding-left: 0; }
+    .footer-col ul li a:hover { color: var(--gold); }
 
     .branch-item {
       margin-bottom: 18px;
@@ -1073,6 +1169,10 @@
     }
     .newsletter-btn:hover { background: var(--gold-light); transform: scale(1.03); }
 
+    body.lang-ar .newsletter-btn i {
+      transform: rotate(180deg);
+    }
+
     .footer-bottom {
       border-top: 1px solid rgba(197,168,128,0.08);
       padding: 24px 0;
@@ -1089,11 +1189,12 @@
     .footer-bottom a { color: var(--gold); }
 
     /* ============================================================
-       TOAST NOTIFICATION
+       TOAST NOTIFICATION (Center bottom for layout-neutral design)
     ============================================================ */
     #toast {
       position: fixed;
-      bottom: 32px; right: 32px;
+      bottom: 32px;
+      left: 50%;
       z-index: 9999;
       background: var(--espresso-mid);
       border: 1px solid rgba(197,168,128,0.25);
@@ -1101,23 +1202,24 @@
       padding: 14px 22px;
       display: flex; align-items: center; gap: 12px;
       box-shadow: var(--shadow-card);
-      transform: translateX(120%);
+      transform: translate(-50%, 160%);
       transition: transform 0.4s cubic-bezier(0.25,0.8,0.25,1);
-      max-width: 300px;
+      width: max-content;
+      max-width: 90vw;
     }
-    #toast.show { transform: translateX(0); }
+    #toast.show { transform: translate(-50%, 0); }
     #toast i { color: var(--gold); font-size: 1rem; }
-    #toast span { font-size: 0.85rem; color: var(--beige); }
+    #toast span { font-size: 0.85rem; color: var(--beige); font-weight: 500; }
 
     /* ============================================================
-       RESPONSIVE
+       RESPONSIVE & MOBILE OVERRIDES
     ============================================================ */
     @media (max-width: 1024px) {
       .footer-grid { grid-template-columns: 1fr 1fr; }
     }
 
     @media (max-width: 860px) {
-      .nav-links, .nav-cta { display: none; }
+      .nav-links, .nav-cta, #navbar .lang-switch-btn { display: none; }
       .hamburger { display: flex; }
       .hero-image-wrap { width: 100%; opacity: 0.25; }
       .hero-content { max-width: 100%; padding-top: 120px; }
@@ -1131,28 +1233,16 @@
       .footer-bottom { flex-direction: column; text-align: center; }
       .hero-stats { gap: 24px; }
       .newsletter-form { flex-direction: column; }
-      #toast { right: 16px; bottom: 16px; }
     }
   </style>
 </head>
-<body>
+<body class="lang-en"> <div id="cart-counter">0</div>
 
-  <!-- ============================================================
-       CART COUNTER (Floating)
-  ============================================================ -->
-  <div id="cart-counter">0</div>
-
-  <!-- ============================================================
-       TOAST NOTIFICATION
-  ============================================================ -->
   <div id="toast">
     <i class="fa-solid fa-circle-check"></i>
-    <span id="toast-msg">Added to cart!</span>
+    <span id="toast-msg">Added to cart! / تم الإضافة!</span>
   </div>
 
-  <!-- ============================================================
-       NAVIGATION
-  ============================================================ -->
   <nav id="navbar">
     <div class="container">
       <div class="nav-inner">
@@ -1163,15 +1253,43 @@
         </a>
 
         <ul class="nav-links">
-          <li><a href="#journey">Our Story</a></li>
-          <li><a href="#products">Products</a></li>
-          <li><a href="#menu">Menu</a></li>
-          <li><a href="#footer">Branches</a></li>
+          <li>
+            <a href="#journey">
+              <span class="en-text">Our Story</span>
+              <span class="ar-text">قصتنا</span>
+            </a>
+          </li>
+          <li>
+            <a href="#products">
+              <span class="en-text">Products</span>
+              <span class="ar-text">محاصيلنا</span>
+            </a>
+          </li>
+          <li>
+            <a href="#menu">
+              <span class="en-text">Menu</span>
+              <span class="ar-text">القائمة</span>
+            </a>
+          </li>
+          <li>
+            <a href="#footer">
+              <span class="en-text">Branches</span>
+              <span class="ar-text">فروعنا</span>
+            </a>
+          </li>
         </ul>
 
-        <a href="#products" class="btn btn-primary nav-cta" style="padding:11px 24px;font-size:0.8rem;">
-          <i class="fa-solid fa-bag-shopping"></i> Shop Now
-        </a>
+        <div class="nav-actions-wrap">
+          <button class="lang-switch-btn" id="lang-toggle" aria-label="Switch Language">
+            <span class="en-text">العربية</span>
+            <span class="ar-text">English</span>
+          </button>
+
+          <a href="#products" class="btn btn-primary nav-cta" style="padding:11px 24px;font-size:0.8rem;">
+            <span class="en-text"><i class="fa-solid fa-bag-shopping"></i> Shop Now</span>
+            <span class="ar-text"><i class="fa-solid fa-bag-shopping"></i> تسوق الآن</span>
+          </a>
+        </div>
 
         <button class="hamburger" id="hamburger" aria-label="Menu">
           <span></span><span></span><span></span>
@@ -1180,30 +1298,42 @@
     </div>
   </nav>
 
-  <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobile-menu">
-    <a href="#journey" class="mobile-link">Our Story</a>
-    <a href="#products" class="mobile-link">Products</a>
-    <a href="#menu" class="mobile-link">Menu</a>
-    <a href="#footer" class="mobile-link">Branches</a>
-    <a href="#products" class="btn btn-primary" style="margin-top:16px;">
-      <i class="fa-solid fa-bag-shopping"></i> Shop Now
+    <a href="#journey" class="mobile-link">
+      <span class="en-text">Our Story</span>
+      <span class="ar-text">قصتنا</span>
+    </a>
+    <a href="#products" class="mobile-link">
+      <span class="en-text">Products</span>
+      <span class="ar-text">محاصيلنا</span>
+    </a>
+    <a href="#menu" class="mobile-link">
+      <span class="en-text">Menu</span>
+      <span class="ar-text">القائمة</span>
+    </a>
+    <a href="#footer" class="mobile-link">
+      <span class="en-text">Branches</span>
+      <span class="ar-text">فروعنا</span>
+    </a>
+    
+    <button class="lang-switch-btn" id="mobile-lang-toggle" style="margin-top:10px;">
+      <span class="en-text">العربية</span>
+      <span class="ar-text">English</span>
+    </button>
+
+    <a href="#products" class="btn btn-primary mobile-link" style="margin-top:10px;">
+      <span class="en-text"><i class="fa-solid fa-bag-shopping"></i> Shop Now</span>
+      <span class="ar-text"><i class="fa-solid fa-bag-shopping"></i> تسوق الآن</span>
     </a>
   </div>
 
-  <!-- ============================================================
-       HERO SECTION
-  ============================================================ -->
   <section id="hero">
     <div class="hero-bg"></div>
     <div class="hero-ring"></div>
 
-    <!-- Right image / illustration -->
     <div class="hero-image-wrap">
       <div class="hero-img-placeholder">
-        <!-- Decorative coffee cup SVG -->
         <svg viewBox="0 0 400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Steam lines -->
           <path d="M140 80 Q145 55 140 30" stroke="#c5a880" stroke-width="2" stroke-linecap="round" opacity="0.5">
             <animate attributeName="d" values="M140 80 Q145 55 140 30;M140 80 Q135 55 138 28;M140 80 Q145 55 140 30" dur="3s" repeatCount="indefinite"/>
             <animate attributeName="opacity" values="0.5;0.2;0.5" dur="3s" repeatCount="indefinite"/>
@@ -1216,24 +1346,16 @@
             <animate attributeName="d" values="M260 80 Q265 55 260 32;M260 80 Q255 55 258 30;M260 80 Q265 55 260 32" dur="2.8s" repeatCount="indefinite"/>
             <animate attributeName="opacity" values="0.45;0.15;0.45" dur="2.8s" repeatCount="indefinite"/>
           </path>
-          <!-- Cup body -->
           <path d="M100 100 L120 360 Q200 390 280 360 L300 100 Z" fill="#2a1206" stroke="#c5a880" stroke-width="1" stroke-opacity="0.3"/>
-          <!-- Cup gradient fill -->
           <path d="M108 130 L124 340 Q200 365 276 340 L292 130 Z" fill="url(#coffeeGrad)"/>
-          <!-- Saucer -->
           <ellipse cx="200" cy="375" rx="130" ry="22" fill="#1e0d05" stroke="#c5a880" stroke-width="1" stroke-opacity="0.4"/>
           <ellipse cx="200" cy="370" rx="110" ry="15" fill="#2a1206"/>
-          <!-- Handle -->
           <path d="M292 160 Q350 160 350 220 Q350 280 292 280" stroke="#c5a880" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.5"/>
-          <!-- Coffee surface -->
           <ellipse cx="200" cy="133" rx="92" ry="14" fill="#3d1a08"/>
-          <!-- Latte art -->
           <path d="M160 130 Q200 118 240 130" stroke="#c5a880" stroke-width="1.5" fill="none" opacity="0.4"/>
           <ellipse cx="200" cy="133" rx="40" ry="6" fill="none" stroke="#c5a880" stroke-width="1" opacity="0.3"/>
-          <!-- Osol text on cup -->
           <text x="200" y="250" text-anchor="middle" font-family="serif" font-size="22" fill="#c5a880" fill-opacity="0.6" font-style="italic">Osol</text>
           <text x="200" y="272" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#c5a880" fill-opacity="0.35" letter-spacing="3">أصول</text>
-          <!-- Bottom beans decoration -->
           <ellipse cx="150" cy="430" rx="18" ry="12" fill="#3d1a08" stroke="#c5a880" stroke-width="0.5" stroke-opacity="0.3" transform="rotate(-20 150 430)"/>
           <ellipse cx="250" cy="435" rx="18" ry="12" fill="#3d1a08" stroke="#c5a880" stroke-width="0.5" stroke-opacity="0.3" transform="rotate(15 250 435)"/>
           <ellipse cx="200" cy="445" rx="18" ry="12" fill="#3d1a08" stroke="#c5a880" stroke-width="0.5" stroke-opacity="0.3" transform="rotate(-5 200 445)"/>
@@ -1250,66 +1372,72 @@
     <div class="container">
       <div class="hero-content fade-in">
         <div class="hero-badge">
-          <i class="fa-solid fa-star"></i>
-          Specialty Grade · Single Origin
+          <span class="en-text"><i class="fa-solid fa-star"></i> Specialty Grade · Single Origin</span>
+          <span class="ar-text"><i class="fa-solid fa-star"></i> درجة مختصة · أحادية المصدر</span>
         </div>
 
-        <h1 class="hero-title">
-          Where Every Cup
-          <em>Tells a Story</em>
-          <span class="hero-ar">كل كوب حكاية أصيلة</span>
-        </h1>
+        <h1 class="hero-title en-text">Where Every Cup <em>Tells a Story</em></h1>
+        <h1 class="hero-title ar-text">حيثُ يروي كلُ كوبٍ <em>قِصةً أصيلة</em></h1>
 
-        <p class="hero-sub">
-          From sun-drenched Ethiopian highlands to your hands — we source, roast, and craft specialty coffee that honours both the farmer and the drinker.
-        </p>
+        <p class="hero-sub en-text">From sun-drenched Ethiopian highlands to your hands — we source, roast, and craft specialty coffee that honours both the farmer and the drinker.</p>
+        <p class="hero-sub ar-text">من المرتفعات الإثيوبية المشمسة مباشرةً إلى يديك — نختار، ونحمص، ونقّدم قهوة مختصة تُكرم صانعيها وتُسعد متذوقيها.</p>
 
         <div class="hero-actions">
           <a href="#products" class="btn btn-primary">
-            <i class="fa-solid fa-bag-shopping"></i>
-            Explore Blends
+            <span class="en-text"><i class="fa-solid fa-bag-shopping"></i> Explore Blends</span>
+            <span class="ar-text"><i class="fa-solid fa-bag-shopping"></i> استكشف الأنواع</span>
           </a>
           <a href="#journey" class="btn btn-outline">
-            <i class="fa-solid fa-leaf"></i>
-            Our Story
+            <span class="en-text"><i class="fa-solid fa-leaf"></i> Our Story</span>
+            <span class="ar-text"><i class="fa-solid fa-leaf"></i> رحلتنا</span>
           </a>
         </div>
 
         <div class="hero-stats">
           <div class="stat-item">
             <div class="stat-num">12+</div>
-            <div class="stat-label">Origins</div>
+            <div class="stat-label">
+              <span class="en-text">Origins</span>
+              <span class="ar-text">مصدر عالمي</span>
+            </div>
           </div>
           <div class="stat-item">
-            <div class="stat-num">98°</div>
-            <div class="stat-label">Brew Temp</div>
+            <div class="stat-num">93°</div>
+            <div class="stat-label">
+              <span class="en-text">Brew Temp</span>
+              <span class="ar-text">حرارة الاستخلاص</span>
+            </div>
           </div>
           <div class="stat-item">
             <div class="stat-num">5★</div>
-            <div class="stat-label">Reviews</div>
+            <div class="stat-label">
+              <span class="en-text">Reviews</span>
+              <span class="ar-text">تقييمات عالية</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <div class="hero-scroll">
-      <span>Scroll</span>
+      <span class="en-text">Scroll</span>
+      <span class="ar-text">اسحب للأسفل</span>
       <div class="scroll-line"></div>
     </div>
   </section>
 
-  <!-- ============================================================
-       THE BEAN JOURNEY (Our Story)
-  ============================================================ -->
   <section id="journey">
     <div class="container">
       <div class="journey-header fade-in">
-        <span class="section-tag"><i class="fa-solid fa-route"></i> &nbsp;The Bean Journey</span>
-        <h2 class="section-title">From Seed to <em>Sip</em></h2>
+        <span class="section-tag">
+          <span class="en-text"><i class="fa-solid fa-route"></i> &nbsp;The Bean Journey</span>
+          <span class="ar-text"><i class="fa-solid fa-route"></i> &nbsp;رحلة حبة البن</span>
+        </span>
+        <h2 class="section-title en-text">From Seed to <em>Sip</em></h2>
+        <h2 class="section-title ar-text">من البذرة.. إلى <em>الرشفة</em></h2>
         <div class="divider"></div>
-        <p class="section-subtitle">
-          We believe great coffee begins long before the roaster. Follow the journey that transforms a humble seed into your perfect cup.
-        </p>
+        <p class="section-subtitle en-text">We believe great coffee begins long before the roaster. Follow the journey that transforms a humble seed into your perfect cup.</p>
+        <p class="section-subtitle ar-text">نؤمن بأن القهوة العظيمة تبدأ قبل المحمصة بكثير. تتبّع الخطوات الفنية التي تُحيل البذرة البسيطة إلى نبتة تعانق رشفة يومك المثالي.</p>
       </div>
 
       <div class="journey-steps">
@@ -1320,10 +1448,12 @@
             <i class="fa-solid fa-seedling"></i>
           </div>
           <div class="step-num">— 01 —</div>
-          <h3 class="step-title">Farming</h3>
-          <p class="step-desc">
-            We partner directly with smallholder farmers in Ethiopia, Colombia, and Yemen — paying fair premiums for hand-picked, sun-ripened cherries grown at altitude.
-          </p>
+          <h3 class="step-title">
+            <span class="en-text">Farming</span>
+            <span class="ar-text">الزراعة المستدامة</span>
+          </h3>
+          <p class="step-desc en-text">We partner directly with smallholder farmers in Ethiopia, Colombia, and Yemen — paying fair premiums for hand-picked, sun-ripened cherries grown at altitude.</p>
+          <p class="step-desc ar-text">نعمل مباشرةً مع صغار المزارعين في إثيوبيا، كولومبيا، واليمن — مقدمين عوائد عادلة نظير كرزات البن المقطوفة يدوياً والمجففة بالشمس في أعالي القمم.</p>
         </div>
 
         <div class="journey-step fade-in fade-in-delay-2">
@@ -1331,10 +1461,12 @@
             <i class="fa-solid fa-fire-flame-curved"></i>
           </div>
           <div class="step-num">— 02 —</div>
-          <h3 class="step-title">Roasting</h3>
-          <p class="step-desc">
-            Our head roaster profiles each origin individually, using precision drum roasting to reveal the bean's true character — never masking, always enhancing.
-          </p>
+          <h3 class="step-title">
+            <span class="en-text">Roasting</span>
+            <span class="ar-text">الحمص الحِرفي</span>
+          </h3>
+          <p class="step-desc en-text">Our head roaster profiles each origin individually, using precision drum roasting to reveal the bean's true character — never masking, always enhancing.</p>
+          <p class="step-desc ar-text">يبتكر حمّاصنا المحترف منحنى تحميص فريد لكل فئة، مستخدماً محامص أسطوانية دقيقة لإبراز الإيحاءات الطبيعية الأصيلة للحبة دون تشويهها.</p>
         </div>
 
         <div class="journey-step fade-in fade-in-delay-3">
@@ -1342,35 +1474,39 @@
             <i class="fa-solid fa-mug-hot"></i>
           </div>
           <div class="step-num">— 03 —</div>
-          <h3 class="step-title">Brewing</h3>
-          <p class="step-desc">
-            Whether pour-over, espresso, or cold brew — our baristas are trained in the art of extraction, ensuring every cup achieves its full flavour potential.
-          </p>
+          <h3 class="step-title">
+            <span class="en-text">Brewing</span>
+            <span class="ar-text">شغف التحضير</span>
+          </h3>
+          <p class="step-desc en-text">Whether pour-over, espresso, or cold brew — our baristas are trained in the art of extraction, ensuring every cup achieves its full flavour potential.</p>
+          <p class="step-desc ar-text">سواءً كانت قهوة مقطرة، إسبريسو، أو كولد برو — فإن الباريستا لدينا ممرسون على علوم الاستخلاص المثالية لضمان تدفق النكهة الغنية بكامل طاقتها.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       FEATURED PRODUCTS SHOWCASE
-  ============================================================ -->
   <section id="products">
     <div class="container">
       <div class="products-header">
         <div class="fade-in">
-          <span class="section-tag"><i class="fa-solid fa-bag-shopping"></i> &nbsp;Our Coffees</span>
-          <h2 class="section-title">Featured <em>Blends</em></h2>
+          <span class="section-tag">
+            <span class="en-text"><i class="fa-solid fa-bag-shopping"></i> &nbsp;Our Coffees</span>
+            <span class="ar-text"><i class="fa-solid fa-bag-shopping"></i> &nbsp;محاصيلنا</span>
+          </span>
+          <h2 class="section-title en-text">Featured <em>Blends</em></h2>
+          <h2 class="section-title ar-text">إصدارات <em>مختارة</em></h2>
           <div class="divider"></div>
-          <p class="section-subtitle">Single-origin roasts, sourced at peak harvest, shipped fresh within 48 hours of roasting.</p>
+          <p class="section-subtitle en-text">Single-origin roasts, sourced at peak harvest, shipped fresh within 48 hours of roasting.</p>
+          <p class="section-subtitle ar-text">حبوب أحادية المصدر، نختارها في أوج مواسم الحصاد وتُحمص بعناية لنضمن جودتها الفائقة.</p>
         </div>
         <a href="#" class="btn btn-outline fade-in fade-in-delay-1">
-          View All <i class="fa-solid fa-arrow-right"></i>
+          <span class="en-text">View All <i class="fa-solid fa-arrow-right"></i></span>
+          <span class="ar-text">عرض الكل <i class="fa-solid fa-arrow-left"></i></span>
         </a>
       </div>
 
       <div class="products-grid">
 
-        <!-- Product 1: Ethiopian -->
         <div class="product-card fade-in fade-in-delay-1">
           <div class="product-card-img">
             <div class="coffee-bag">
@@ -1382,22 +1518,33 @@
                 </div>
               </div>
             </div>
-            <span class="product-badge">Bestseller</span>
+            <span class="product-badge">
+              <span class="en-text">Bestseller</span>
+              <span class="ar-text">الأكثر مبيعاً</span>
+            </span>
           </div>
           <div class="product-card-body">
-            <div class="product-origin"><i class="fa-solid fa-location-dot"></i> &nbsp;Yirgacheffe, Ethiopia</div>
-            <h3 class="product-name">Yirgacheffe Natural</h3>
-            <p class="product-notes">Blueberry · Dark Chocolate · Jasmine · Light Roast</p>
+            <div class="product-origin">
+              <span class="en-text"><i class="fa-solid fa-location-dot"></i> &nbsp;Yirgacheffe, Ethiopia</span>
+              <span class="ar-text"><i class="fa-solid fa-location-dot"></i> &nbsp;يرغاشيفي، إثيوبيا</span>
+            </div>
+            <h3 class="product-name">
+              <span class="en-text">Yirgacheffe Natural</span>
+              <span class="ar-text">يرغاشيفي مجففة</span>
+            </h3>
+            <p class="product-notes">
+              <span class="en-text">Blueberry · Dark Chocolate · Jasmine · Light Roast</span>
+              <span class="ar-text">توت أزرق · شوكولاتة داكنة · ياسمين · حمصة خفيفة</span>
+            </p>
             <div class="product-footer">
-              <div class="product-price">180 <span>EGP / 250g</span></div>
-              <button class="add-to-cart" onclick="addToCart(this, 'Yirgacheffe Natural')" title="Add to Cart">
+              <div class="product-price">180 <span class="en-text">EGP / 250g</span><span class="ar-text">ج.م / ٢٥٠ جم</span></div>
+              <button class="add-to-cart" onclick="addToCart(this, 'Yirgacheffe Natural', 'يرغاشيفي مجففة')" title="Add to Cart">
                 <i class="fa-solid fa-plus"></i>
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Product 2: Colombian -->
         <div class="product-card fade-in fade-in-delay-2">
           <div class="product-card-img">
             <div class="coffee-bag">
@@ -1411,19 +1558,27 @@
             </div>
           </div>
           <div class="product-card-body">
-            <div class="product-origin"><i class="fa-solid fa-location-dot"></i> &nbsp;Huila, Colombia</div>
-            <h3 class="product-name">Huila Washed</h3>
-            <p class="product-notes">Caramel · Red Apple · Almond · Medium Roast</p>
+            <div class="product-origin">
+              <span class="en-text"><i class="fa-solid fa-location-dot"></i> &nbsp;Huila, Colombia</span>
+              <span class="ar-text"><i class="fa-solid fa-location-dot"></i> &nbsp;هويلا، كولومبيا</span>
+            </div>
+            <h3 class="product-name">
+              <span class="en-text">Huila Washed</span>
+              <span class="ar-text">هويلا مغسولة</span>
+            </h3>
+            <p class="product-notes">
+              <span class="en-text">Caramel · Red Apple · Almond · Medium Roast</span>
+              <span class="ar-text">كاراميل · تفاح أحمر · لوز · حمصة متوسطة</span>
+            </p>
             <div class="product-footer">
-              <div class="product-price">165 <span>EGP / 250g</span></div>
-              <button class="add-to-cart" onclick="addToCart(this, 'Huila Washed')" title="Add to Cart">
+              <div class="product-price">165 <span class="en-text">EGP / 250g</span><span class="ar-text">ج.م / ٢٥٠ جم</span></div>
+              <button class="add-to-cart" onclick="addToCart(this, 'Huila Washed', 'هويلا مغسولة')" title="Add to Cart">
                 <i class="fa-solid fa-plus"></i>
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Product 3: Yemeni -->
         <div class="product-card fade-in fade-in-delay-3">
           <div class="product-card-img">
             <div class="coffee-bag">
@@ -1435,22 +1590,33 @@
                 </div>
               </div>
             </div>
-            <span class="product-badge">Rare</span>
+            <span class="product-badge">
+              <span class="en-text">Rare</span>
+              <span class="ar-text">نادر</span>
+            </span>
           </div>
           <div class="product-card-body">
-            <div class="product-origin"><i class="fa-solid fa-location-dot"></i> &nbsp;Haraaz, Yemen</div>
-            <h3 class="product-name">Haraaz Heirloom</h3>
-            <p class="product-notes">Dried Fig · Tamarind · Spice · Medium-Dark</p>
+            <div class="product-origin">
+              <span class="en-text"><i class="fa-solid fa-location-dot"></i> &nbsp;Haraaz, Yemen</span>
+              <span class="ar-text"><i class="fa-solid fa-location-dot"></i> &nbsp;حراز، اليمن</span>
+            </div>
+            <h3 class="product-name">
+              <span class="en-text">Haraaz Heirloom</span>
+              <span class="ar-text">حراز سلالة عريقة</span>
+            </h3>
+            <p class="product-notes">
+              <span class="en-text">Dried Fig · Tamarind · Spice · Medium-Dark</span>
+              <span class="ar-text">تين مجفف · تمر هندي · توابل · حمصة متوسطة-غامقة</span>
+            </p>
             <div class="product-footer">
-              <div class="product-price">220 <span>EGP / 250g</span></div>
-              <button class="add-to-cart" onclick="addToCart(this, 'Haraaz Heirloom')" title="Add to Cart">
+              <div class="product-price">220 <span class="en-text">EGP / 250g</span><span class="ar-text">ج.م / ٢٥٠ جم</span></div>
+              <button class="add-to-cart" onclick="addToCart(this, 'Haraaz Heirloom', 'حراز سلالة عريقة')" title="Add to Cart">
                 <i class="fa-solid fa-plus"></i>
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Product 4: Kenyan -->
         <div class="product-card fade-in fade-in-delay-4">
           <div class="product-card-img">
             <div class="coffee-bag">
@@ -1464,12 +1630,21 @@
             </div>
           </div>
           <div class="product-card-body">
-            <div class="product-origin"><i class="fa-solid fa-location-dot"></i> &nbsp;Nyeri, Kenya</div>
-            <h3 class="product-name">Nyeri AA Washed</h3>
-            <p class="product-notes">Blackcurrant · Tomato · Bright Citrus · Light</p>
+            <div class="product-origin">
+              <span class="en-text"><i class="fa-solid fa-location-dot"></i> &nbsp;Nyeri, Kenya</span>
+              <span class="ar-text"><i class="fa-solid fa-location-dot"></i> &nbsp;نييري، كينيا</span>
+            </div>
+            <h3 class="product-name">
+              <span class="en-text">Nyeri AA Washed</span>
+              <span class="ar-text">نييري AA مغسولة</span>
+            </h3>
+            <p class="product-notes">
+              <span class="en-text">Blackcurrant · Tomato · Bright Citrus · Light</span>
+              <span class="ar-text">كشمش أسود · طماطم · حمضية زاهية · حمصة خفيفة</span>
+            </p>
             <div class="product-footer">
-              <div class="product-price">195 <span>EGP / 250g</span></div>
-              <button class="add-to-cart" onclick="addToCart(this, 'Nyeri AA')" title="Add to Cart">
+              <div class="product-price">195 <span class="en-text">EGP / 250g</span><span class="ar-text">ج.م / ٢٥٠ جم</span></div>
+              <button class="add-to-cart" onclick="addToCart(this, 'Nyeri AA Washed', 'نييري AA مغسولة')" title="Add to Cart">
                 <i class="fa-solid fa-plus"></i>
               </button>
             </div>
@@ -1480,176 +1655,172 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       INTERACTIVE DRINK MENU
-  ============================================================ -->
   <section id="menu">
     <div class="container">
       <div class="menu-header fade-in">
-        <span class="section-tag"><i class="fa-solid fa-mug-saucer"></i> &nbsp;Drink Menu</span>
-        <h2 class="section-title">Crafted with <em>Intention</em></h2>
+        <span class="section-tag">
+          <span class="en-text"><i class="fa-solid fa-mug-saucer"></i> &nbsp;Drink Menu</span>
+          <span class="ar-text"><i class="fa-solid fa-mug-saucer"></i> &nbsp;قائمة المشروبات</span>
+        </span>
+        <h2 class="section-title en-text">Crafted with <em>Intention</em></h2>
+        <h2 class="section-title ar-text">حُضّرت <em>بشغف وعناية</em></h2>
         <div class="divider"></div>
-        <p class="section-subtitle">Every drink on our menu is calibrated for flavour, balance, and that moment of pure satisfaction.</p>
+        <p class="section-subtitle en-text">Every drink on our menu is calibrated for flavour, balance, and that moment of pure satisfaction.</p>
+        <p class="section-subtitle ar-text">كل كوب في قائمتنا وُزنت مقاديره بعناية فائقة لنضمن لك نكهة متوازنة ورشفة ممتعة.</p>
       </div>
 
-      <!-- Tab Filters -->
       <div class="menu-tabs fade-in">
         <button class="tab-btn active" data-filter="all">
-          <i class="fa-solid fa-border-all"></i> &nbsp;All
+          <span class="en-text"><i class="fa-solid fa-border-all"></i> &nbsp;All</span>
+          <span class="ar-text"><i class="fa-solid fa-border-all"></i> &nbsp;الكل</span>
         </button>
         <button class="tab-btn" data-filter="hot">
-          <i class="fa-solid fa-fire"></i> &nbsp;Hot
+          <span class="en-text"><i class="fa-solid fa-fire"></i> &nbsp;Hot</span>
+          <span class="ar-text"><i class="fa-solid fa-fire"></i> &nbsp;ساخن</span>
         </button>
         <button class="tab-btn" data-filter="cold">
-          <i class="fa-solid fa-snowflake"></i> &nbsp;Cold
+          <span class="en-text"><i class="fa-solid fa-snowflake"></i> &nbsp;Cold</span>
+          <span class="ar-text"><i class="fa-solid fa-snowflake"></i> &nbsp;بارد</span>
         </button>
       </div>
 
-      <!-- Menu Items Grid -->
       <div class="menu-grid" id="menu-grid">
 
-        <!-- HOT DRINKS -->
         <div class="menu-item" data-type="hot">
           <div class="menu-item-icon">☕</div>
           <div class="menu-item-info">
-            <div class="menu-item-type"><i class="fa-solid fa-fire"></i> Hot</div>
-            <div class="menu-item-name">Single Espresso</div>
-            <div class="menu-item-desc">Pure, concentrated, 30ml of liquid gold</div>
+            <div class="menu-item-type"><i class="fa-solid fa-fire"></i> <span class="en-text">Hot</span><span class="ar-text">ساخن</span></div>
+            <div class="menu-item-name"><span class="en-text">Single Espresso</span><span class="ar-text">إسبريسو سينجل</span></div>
+            <div class="menu-item-desc"><span class="en-text">Pure, concentrated, 30ml of liquid gold</span><span class="ar-text">مركز ونقي، ٣٠ مل من الذهب السائل</span></div>
           </div>
-          <div class="menu-item-price">35<small>EGP</small></div>
+          <div class="menu-item-price">35<small class="en-text">EGP</small><small class="ar-text">ج.م</small></div>
         </div>
 
         <div class="menu-item" data-type="hot">
           <div class="menu-item-icon">🫖</div>
           <div class="menu-item-info">
-            <div class="menu-item-type"><i class="fa-solid fa-fire"></i> Hot</div>
-            <div class="menu-item-name">Flat White</div>
-            <div class="menu-item-desc">Double ristretto with velvety micro-foam</div>
+            <div class="menu-item-type"><i class="fa-solid fa-fire"></i> <span class="en-text">Hot</span><span class="ar-text">ساخن</span></div>
+            <div class="menu-item-name"><span class="en-text">Flat White</span><span class="ar-text">فلات وايت</span></div>
+            <div class="menu-item-desc"><span class="en-text">Double ristretto with velvety micro-foam</span><span class="ar-text">ريستريتو مزدوج مع رغوة حليب مخملية</span></div>
           </div>
-          <div class="menu-item-price">65<small>EGP</small></div>
+          <div class="menu-item-price">65<small class="en-text">EGP</small><small class="ar-text">ج.م</small></div>
         </div>
 
         <div class="menu-item" data-type="hot">
           <div class="menu-item-icon">🍵</div>
           <div class="menu-item-info">
-            <div class="menu-item-type"><i class="fa-solid fa-fire"></i> Hot</div>
-            <div class="menu-item-name">V60 Pour Over</div>
-            <div class="menu-item-desc">Slow-brewed single origin, crystal clear</div>
+            <div class="menu-item-type"><i class="fa-solid fa-fire"></i> <span class="en-text">Hot</span><span class="ar-text">ساخن</span></div>
+            <div class="menu-item-name"><span class="en-text">V60 Pour Over</span><span class="ar-text">V60 مقطرة</span></div>
+            <div class="menu-item-desc"><span class="en-text">Slow-brewed single origin, crystal clear</span><span class="ar-text">محصول أحادي مستخلص ببطء، نقي وقوام صافٍ</span></div>
           </div>
-          <div class="menu-item-price">75<small>EGP</small></div>
+          <div class="menu-item-price">75<small class="en-text">EGP</small><small class="ar-text">ج.م</small></div>
         </div>
 
         <div class="menu-item" data-type="hot">
           <div class="menu-item-icon">☕</div>
           <div class="menu-item-info">
-            <div class="menu-item-type"><i class="fa-solid fa-fire"></i> Hot</div>
-            <div class="menu-item-name">Oat Milk Latte</div>
-            <div class="menu-item-desc">Creamy, plant-based, perfectly balanced</div>
+            <div class="menu-item-type"><i class="fa-solid fa-fire"></i> <span class="en-text">Hot</span><span class="ar-text">ساخن</span></div>
+            <div class="menu-item-name"><span class="en-text">Oat Milk Latte</span><span class="ar-text">لاتيه بحليب الشوفان</span></div>
+            <div class="menu-item-desc"><span class="en-text">Creamy, plant-based, perfectly balanced</span><span class="ar-text">كريمي غني، بديل نباتي متوازن تماماً</span></div>
           </div>
-          <div class="menu-item-price">80<small>EGP</small></div>
+          <div class="menu-item-price">80<small class="en-text">EGP</small><small class="ar-text">ج.م</small></div>
         </div>
 
         <div class="menu-item" data-type="hot">
           <div class="menu-item-icon">🫗</div>
           <div class="menu-item-info">
-            <div class="menu-item-type"><i class="fa-solid fa-fire"></i> Hot</div>
-            <div class="menu-item-name">Cortado</div>
-            <div class="menu-item-desc">Equal parts espresso and warm milk</div>
+            <div class="menu-item-type"><i class="fa-solid fa-fire"></i> <span class="en-text">Hot</span><span class="ar-text">ساخن</span></div>
+            <div class="menu-item-name"><span class="en-text">Cortado</span><span class="ar-text">كورتادو</span></div>
+            <div class="menu-item-desc"><span class="en-text">Equal parts espresso and warm milk</span><span class="ar-text">أجزاء متساوية من الإسبريسو والحليب المبخر</span></div>
           </div>
-          <div class="menu-item-price">55<small>EGP</small></div>
+          <div class="menu-item-price">55<small class="en-text">EGP</small><small class="ar-text">ج.م</small></div>
         </div>
 
         <div class="menu-item" data-type="hot">
           <div class="menu-item-icon">☕</div>
           <div class="menu-item-info">
-            <div class="menu-item-type"><i class="fa-solid fa-fire"></i> Hot</div>
-            <div class="menu-item-name">Cappuccino</div>
-            <div class="menu-item-desc">Espresso, steamed milk & thick foam</div>
+            <div class="menu-item-type"><i class="fa-solid fa-fire"></i> <span class="en-text">Hot</span><span class="ar-text">ساخن</span></div>
+            <div class="menu-item-name"><span class="en-text">Cappuccino</span><span class="ar-text">كابوتشينو</span></div>
+            <div class="menu-item-desc"><span class="en-text">Espresso, steamed milk & thick foam</span><span class="ar-text">إسبريسو، حليب مبخر ورغوة كثيفة غنية</span></div>
           </div>
-          <div class="menu-item-price">65<small>EGP</small></div>
+          <div class="menu-item-price">65<small class="en-text">EGP</small><small class="ar-text">ج.م</small></div>
         </div>
 
-        <!-- COLD DRINKS -->
         <div class="menu-item" data-type="cold">
           <div class="menu-item-icon">🧊</div>
           <div class="menu-item-info">
-            <div class="menu-item-type"><i class="fa-solid fa-snowflake"></i> Cold</div>
-            <div class="menu-item-name">Cold Brew</div>
-            <div class="menu-item-desc">18-hour steep, smooth, never bitter</div>
+            <div class="menu-item-type"><i class="fa-solid fa-snowflake"></i> <span class="en-text">Cold</span><span class="ar-text">بارد</span></div>
+            <div class="menu-item-name"><span class="en-text">Cold Brew</span><span class="ar-text">كولد برو</span></div>
+            <div class="menu-item-desc"><span class="en-text">18-hour steep, smooth, never bitter</span><span class="ar-text">مستخلصة على البارد لـ ١٨ ساعة، سلسة خالية من المرارة</span></div>
           </div>
-          <div class="menu-item-price">70<small>EGP</small></div>
+          <div class="menu-item-price">70<small class="en-text">EGP</small><small class="ar-text">ج.م</small></div>
         </div>
 
         <div class="menu-item" data-type="cold">
           <div class="menu-item-icon">🥤</div>
           <div class="menu-item-info">
-            <div class="menu-item-type"><i class="fa-solid fa-snowflake"></i> Cold</div>
-            <div class="menu-item-name">Iced Latte</div>
-            <div class="menu-item-desc">Double shot espresso over ice & milk</div>
+            <div class="menu-item-type"><i class="fa-solid fa-snowflake"></i> <span class="en-text">Cold</span><span class="ar-text">بارد</span></div>
+            <div class="menu-item-name"><span class="en-text">Iced Latte</span><span class="ar-text">آيس لاتيه</span></div>
+            <div class="menu-item-desc"><span class="en-text">Double shot espresso over ice & milk</span><span class="ar-text">جرعة مزدوجة إسبريسو مع الحليب والثلج</span></div>
           </div>
-          <div class="menu-item-price">75<small>EGP</small></div>
+          <div class="menu-item-price">75<small class="en-text">EGP</small><small class="ar-text">ج.م</small></div>
         </div>
 
         <div class="menu-item" data-type="cold">
           <div class="menu-item-icon">🫙</div>
           <div class="menu-item-info">
-            <div class="menu-item-type"><i class="fa-solid fa-snowflake"></i> Cold</div>
-            <div class="menu-item-name">Nitro Cold Brew</div>
-            <div class="menu-item-desc">Velvety nitrogen-infused cold brew</div>
+            <div class="menu-item-type"><i class="fa-solid fa-snowflake"></i> <span class="en-text">Cold</span><span class="ar-text">بارد</span></div>
+            <div class="menu-item-name"><span class="en-text">Nitro Cold Brew</span><span class="ar-text">نيترو كولد برو</span></div>
+            <div class="menu-item-desc"><span class="en-text">Velvety nitrogen-infused cold brew</span><span class="ar-text">كولد برو مخملية غنية مدمجة بالنيتروجين الخفيف</span></div>
           </div>
-          <div class="menu-item-price">90<small>EGP</small></div>
+          <div class="menu-item-price">90<small class="en-text">EGP</small><small class="ar-text">ج.م</small></div>
         </div>
 
         <div class="menu-item" data-type="cold">
           <div class="menu-item-icon">🧋</div>
           <div class="menu-item-info">
-            <div class="menu-item-type"><i class="fa-solid fa-snowflake"></i> Cold</div>
-            <div class="menu-item-name">Shaken Espresso</div>
-            <div class="menu-item-desc">Shaken with brown sugar & oat milk</div>
+            <div class="menu-item-type"><i class="fa-solid fa-snowflake"></i> <span class="en-text">Cold</span><span class="ar-text">بارد</span></div>
+            <div class="menu-item-name"><span class="en-text">Shaken Espresso</span><span class="ar-text">شاكن إسبريسو</span></div>
+            <div class="menu-item-desc"><span class="en-text">Shaken with brown sugar & oat milk</span><span class="ar-text">مخفوقة مع السكر البني وحليب الشوفان</span></div>
           </div>
-          <div class="menu-item-price">80<small>EGP</small></div>
+          <div class="menu-item-price">80<small class="en-text">EGP</small><small class="ar-text">ج.م</small></div>
         </div>
 
         <div class="menu-item" data-type="cold">
           <div class="menu-item-icon">🍦</div>
           <div class="menu-item-info">
-            <div class="menu-item-type"><i class="fa-solid fa-snowflake"></i> Cold</div>
-            <div class="menu-item-name">Affogato</div>
-            <div class="menu-item-desc">Hot espresso over premium vanilla gelato</div>
+            <div class="menu-item-type"><i class="fa-solid fa-snowflake"></i> <span class="en-text">Cold</span><span class="ar-text">بارد</span></div>
+            <div class="menu-item-name"><span class="en-text">Affogato</span><span class="ar-text">أفوغاتو</span></div>
+            <div class="menu-item-desc"><span class="en-text">Hot espresso over premium vanilla gelato</span><span class="ar-text">إسبريسو ساخن يُسكب فوق جيلاتو الفانيليا الفاخرة</span></div>
           </div>
-          <div class="menu-item-price">85<small>EGP</small></div>
+          <div class="menu-item-price">85<small class="en-text">EGP</small><small class="ar-text">ج.م</small></div>
         </div>
 
         <div class="menu-item" data-type="cold">
           <div class="menu-item-icon">🍹</div>
           <div class="menu-item-info">
-            <div class="menu-item-type"><i class="fa-solid fa-snowflake"></i> Cold</div>
-            <div class="menu-item-name">Cold Brew Tonic</div>
-            <div class="menu-item-desc">Cold brew with sparkling tonic & citrus</div>
+            <div class="menu-item-type"><i class="fa-solid fa-snowflake"></i> <span class="en-text">Cold</span><span class="ar-text">بارد</span></div>
+            <div class="menu-item-name"><span class="en-text">Cold Brew Tonic</span><span class="ar-text">كولد برو تونيك</span></div>
+            <div class="menu-item-desc"><span class="en-text">Cold brew with sparkling tonic & citrus</span><span class="ar-text">كولد برو مع مياه التونيك الفوارة ونكهة حمضية</span></div>
           </div>
-          <div class="menu-item-price">85<small>EGP</small></div>
+          <div class="menu-item-price">85<small class="en-text">EGP</small><small class="ar-text">ج.م</small></div>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       FOOTER
-  ============================================================ -->
   <footer id="footer">
     <div class="container">
       <div class="footer-grid">
 
-        <!-- Brand column -->
         <div class="footer-brand fade-in">
           <a href="#hero" class="nav-logo">
             <span class="logo-en">Osol Coffee</span>
             <span class="logo-ar">أصول للقهوة المختصة</span>
           </a>
-          <p>
-            We believe specialty coffee should be accessible, honest, and exceptional. From farm to cup, we are committed to quality at every step.
-          </p>
+          <p class="en-text">We believe specialty coffee should be accessible, honest, and exceptional. From farm to cup, we are committed to quality at every step.</p>
+          <p class="ar-text">نؤمن بأن القهوة المختصة يجب أن تكون واضحة، صادقة، واستثنائية. من المزرعة إلى الكوب، نحن ملتزمون بأعلى معايير الجودة في كل خطوة.</p>
           <div class="social-links">
             <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
             <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
@@ -1658,66 +1829,71 @@
           </div>
         </div>
 
-        <!-- Branches -->
         <div class="footer-col fade-in fade-in-delay-1">
-          <h4>Our Branches</h4>
+          <h4>
+            <span class="en-text">Our Branches</span>
+            <span class="ar-text">فروعنا</span>
+          </h4>
 
           <div class="branch-item">
-            <div class="branch-name"><i class="fa-solid fa-location-dot" style="color:var(--gold);font-size:.8rem;"></i> &nbsp;Cairo — Maadi</div>
-            <div class="branch-addr">15 Road 9, Maadi<br>Cairo, Egypt</div>
+            <div class="branch-name"><i class="fa-solid fa-location-dot" style="color:var(--gold);font-size:.8rem;"></i> &nbsp;<span class="en-text">Cairo — Maadi</span><span class="ar-text">القاهرة — المعادي</span></div>
+            <div class="branch-addr"><span class="en-text">15 Road 9, Maadi<br>Cairo, Egypt</span><span class="ar-text">١٥ شارع ٩، المعادي<br>القاهرة، مصر</span></div>
           </div>
 
           <div class="branch-item">
-            <div class="branch-name"><i class="fa-solid fa-location-dot" style="color:var(--gold);font-size:.8rem;"></i> &nbsp;Giza — Sheikh Zayed</div>
-            <div class="branch-addr">Arkan Plaza, Gate 3<br>Sheikh Zayed, Giza</div>
+            <div class="branch-name"><i class="fa-solid fa-location-dot" style="color:var(--gold);font-size:.8rem;"></i> &nbsp;<span class="en-text">Giza — Sheikh Zayed</span><span class="ar-text">الجيزة — الشيخ زايد</span></div>
+            <div class="branch-addr"><span class="en-text">Arkan Plaza, Gate 3<br>Sheikh Zayed, Giza</span><span class="ar-text">أركان بلازا، بوابة ٣<br>الشيخ زايد، الجيزة</span></div>
           </div>
 
           <div class="branch-item">
-            <div class="branch-name"><i class="fa-solid fa-location-dot" style="color:var(--gold);font-size:.8rem;"></i> &nbsp;New Cairo</div>
-            <div class="branch-addr">The GrEEK Campus<br>90th Street, Fifth Settlement</div>
+            <div class="branch-name"><i class="fa-solid fa-location-dot" style="color:var(--gold);font-size:.8rem;"></i> &nbsp;<span class="en-text">New Cairo</span><span class="ar-text">القاهرة الجديدة</span></div>
+            <div class="branch-addr"><span class="en-text">The GrEEK Campus<br>90th Street, Fifth Settlement</span><span class="ar-text">مقر الجريك كامبس<br>شارع التسعين، التجمع الخامس</span></div>
           </div>
         </div>
 
-        <!-- Hours -->
         <div class="footer-col fade-in fade-in-delay-2">
-          <h4>Opening Hours</h4>
+          <h4>
+            <span class="en-text">Opening Hours</span>
+            <span class="ar-text">مواعيد العمل</span>
+          </h4>
           <div class="hours-row">
-            <span class="hours-day">Mon – Thu</span>
-            <span class="hours-time">8am – 11pm</span>
+            <span class="hours-day"><span class="en-text">Mon – Thu</span><span class="ar-text">الاثنين – الخميس</span></span>
+            <span class="hours-time"><span class="en-text">8am – 11pm</span><span class="ar-text">٨ ص – ١١ م</span></span>
           </div>
           <div class="hours-row">
-            <span class="hours-day">Friday</span>
-            <span class="hours-time">9am – 12am</span>
+            <span class="hours-day"><span class="en-text">Friday</span><span class="ar-text">الجمعة</span></span>
+            <span class="hours-time"><span class="en-text">9am – 12am</span><span class="ar-text">٩ ص – ١٢ ص</span></span>
           </div>
           <div class="hours-row">
-            <span class="hours-day">Saturday</span>
-            <span class="hours-time">8am – 12am</span>
+            <span class="hours-day"><span class="en-text">Saturday</span><span class="ar-text">السبت</span></span>
+            <span class="hours-time"><span class="en-text">8am – 12am</span><span class="ar-text">٨ ص – ١٢ ص</span></span>
           </div>
           <div class="hours-row">
-            <span class="hours-day">Sunday</span>
-            <span class="hours-time">9am – 10pm</span>
+            <span class="hours-day"><span class="en-text">Sunday</span><span class="ar-text">الأحد</span></span>
+            <span class="hours-time"><span class="en-text">9am – 10pm</span><span class="ar-text">٩ ص – ١٠ م</span></span>
           </div>
 
           <div style="margin-top:20px;">
             <a href="tel:+201234567890" style="font-size:.85rem;color:var(--gold);display:flex;gap:8px;align-items:center;">
-              <i class="fa-solid fa-phone"></i> +20 123 456 7890
+              <i class="fa-solid fa-phone"></i> <span>+20 123 456 7890</span>
             </a>
             <a href="mailto:hello@osol.coffee" style="font-size:.85rem;color:var(--text-muted);display:flex;gap:8px;align-items:center;margin-top:8px;">
-              <i class="fa-solid fa-envelope"></i> hello@osol.coffee
+              <i class="fa-solid fa-envelope"></i> <span>hello@osol.coffee</span>
             </a>
           </div>
         </div>
 
-        <!-- Newsletter -->
         <div class="footer-col fade-in fade-in-delay-3">
-          <h4>Stay Roasted</h4>
-          <p class="newsletter-label">
-            Get notified about new origins, brew guides, and exclusive member offers. No spam — just great coffee talk.
-          </p>
+          <h4>
+            <span class="en-text">Stay Roasted</span>
+            <span class="ar-text">كن على تواصل</span>
+          </h4>
+          <p class="newsletter-label en-text">Get notified about new origins, brew guides, and exclusive member offers. No spam — just great coffee talk.</p>
+          <p class="newsletter-label ar-text">كن أول من يعلم عن المحاصيل الجديدة، أدلة التحضير، والعروض الحصرية للأعضاء. لا رسائل مزعجة.</p>
           <div class="footer-newsletter">
             <div class="newsletter-form">
               <input type="email" class="newsletter-input" placeholder="your@email.com" id="newsletter-input" />
-              <button class="newsletter-btn" onclick="subscribeNewsletter()">
+              <button class="newsletter-btn" onclick="subscribeNewsletter()" aria-label="Subscribe">
                 <i class="fa-solid fa-paper-plane"></i>
               </button>
             </div>
@@ -1725,23 +1901,73 @@
         </div>
       </div>
 
-      <!-- Footer bottom -->
       <div class="footer-bottom">
-        <p>© 2025 Osol Specialty Coffee · أصول للقهوة المختصة · All rights reserved.</p>
+        <p class="en-text">© 2026 Osol Specialty Coffee · All rights reserved.</p>
+        <p class="ar-text">© ٢٠٢٦ أصول للقهوة المختصة · جميع الحقوق محفوظة.</p>
         <p>
-          <a href="#">Privacy Policy</a> &nbsp;·&nbsp;
-          <a href="#">Terms of Service</a> &nbsp;·&nbsp;
-          <a href="#">Wholesale</a>
+          <a href="#">
+            <span class="en-text">Privacy Policy</span>
+            <span class="ar-text">سياسة الخصوصية</span>
+          </a> &nbsp;·&nbsp;
+          <a href="#">
+            <span class="en-text">Terms of Service</span>
+            <span class="ar-text">شروط الخدمة</span>
+          </a> &nbsp;·&nbsp;
+          <a href="#">
+            <span class="en-text">Wholesale</span>
+            <span class="ar-text">مبيعات الجملة</span>
+          </a>
         </p>
       </div>
     </div>
   </footer>
 
 
-  <!-- ============================================================
-       JAVASCRIPT
-  ============================================================ -->
   <script>
+    /* ----------------------------------------------------------
+       BILINGUAL CONTROLLER: Seamless translation switching
+    ---------------------------------------------------------- */
+    const langToggleBtn = document.getElementById('lang-toggle');
+    const mobileLangToggleBtn = document.getElementById('mobile-lang-toggle');
+    const newsletterInput = document.getElementById('newsletter-input');
+
+    function setLanguage(lang) {
+      if (lang === 'ar') {
+        document.body.classList.remove('lang-en');
+        document.body.classList.add('lang-ar');
+        document.documentElement.setAttribute('dir', 'rtl');
+        document.documentElement.setAttribute('lang', 'ar');
+        if (newsletterInput) newsletterInput.placeholder = 'بريدك الإلكتروني';
+        localStorage.setItem('preferred-coffee-lang', 'ar');
+      } else {
+        document.body.classList.remove('lang-ar');
+        document.body.classList.add('lang-en');
+        document.documentElement.setAttribute('dir', 'ltr');
+        document.documentElement.setAttribute('lang', 'en');
+        if (newsletterInput) newsletterInput.placeholder = 'your@email.com';
+        localStorage.setItem('preferred-coffee-lang', 'en');
+      }
+    }
+
+    if (langToggleBtn) {
+      langToggleBtn.addEventListener('click', () => {
+        const targetLang = document.body.classList.contains('lang-ar') ? 'en' : 'ar';
+        setLanguage(targetLang);
+      });
+    }
+
+    if (mobileLangToggleBtn) {
+      mobileLangToggleBtn.addEventListener('click', () => {
+        const targetLang = document.body.classList.contains('lang-ar') ? 'en' : 'ar';
+        setLanguage(targetLang);
+      });
+    }
+
+    // Auto-load preference
+    const savedLang = localStorage.getItem('preferred-coffee-lang') || 'en';
+    setLanguage(savedLang);
+
+
     /* ----------------------------------------------------------
        NAVBAR: scroll-triggered glassmorphism
     ---------------------------------------------------------- */
@@ -1790,9 +2016,9 @@
     fadeEls.forEach(el => observer.observe(el));
 
     /* ----------------------------------------------------------
-       ADD TO CART: micro-interaction
+       ADD TO CART: micro-interaction with dual-language toast
     ---------------------------------------------------------- */
-    function addToCart(btn, productName) {
+    function addToCart(btn, productNameEn, productNameAr) {
       // Prevent double-click
       if (btn.classList.contains('added')) return;
 
@@ -1804,8 +2030,10 @@
       cartCounter.textContent = cartCount;
       cartCounter.classList.add('show');
 
-      // Show toast
-      showToast(`"${productName}" added to cart!`);
+      // Show localized toast
+      const isArabic = document.body.classList.contains('lang-ar');
+      const msg = isArabic ? `تم إضافة "${productNameAr}" إلى السلة!` : `"${productNameEn}" added to cart!`;
+      showToast(msg);
 
       // Reset button after 2s
       setTimeout(() => {
@@ -1860,11 +2088,12 @@
     });
 
     /* ----------------------------------------------------------
-       NEWSLETTER
+       NEWSLETTER WITH LOCALIZED RESPONSE
     ---------------------------------------------------------- */
     function subscribeNewsletter() {
       const input = document.getElementById('newsletter-input');
       const val = input.value.trim();
+      const isArabic = document.body.classList.contains('lang-ar');
 
       if (!val || !val.includes('@')) {
         input.style.borderColor = '#e57373';
@@ -1872,7 +2101,8 @@
         return;
       }
 
-      showToast('Thanks for subscribing! ☕');
+      const msg = isArabic ? 'شكراً لانضمامك إلينا! ☕' : 'Thanks for subscribing! ☕';
+      showToast(msg);
       input.value = '';
     }
 
@@ -1887,7 +2117,8 @@
     window.addEventListener('scroll', () => {
       if (heroRing) {
         const y = window.scrollY * 0.06;
-        heroRing.style.transform = `translateY(calc(-50% + ${y}px)) rotate(${y}deg)`;
+        const baseTransform = document.body.classList.contains('lang-ar') ? 'calc(-50% + ' + y + 'px)' : 'calc(-50% + ' + y + 'px)';
+        heroRing.style.transform = `translateY(${baseTransform}) rotate(${y}deg)`;
       }
     }, { passive: true });
   </script>
